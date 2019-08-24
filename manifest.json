@@ -1,0 +1,29 @@
+{
+  "name": "20-20-20 Rule Reminder",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "Reminds you to look at something at least 20 feet away for 20 seconds every 20 minutes.",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_icon": {
+      "32": "images/uwu.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "commands": {
+    "duplicate-tab": {
+      "suggested_key": {
+        "default": "Ctrl+D",
+        "windows": "Ctrl+D",
+        "mac": "Command+D"
+      },
+      "description": "Duplicate current tab"  
+    }
+  },
+  "permissions": [
+    "alarms"
+  ]
+}
