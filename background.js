@@ -3,13 +3,16 @@ chrome.runtime.onInstalled.addListener(function() {
   // chrome.alarms.create("testAlarm", {delayInMinutes: 1, periodInMinutes: 1});
 });
 
-chrome.commands.getAll(function(commands) {
-  console.log(commands);
-})
-
 chrome.commands.onCommand.addListener(function(command) {
-  console.log('hi: ', command);
-})
+  if (command === "duplicate-tab") {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      let currId = tabs[0].id;
+      if (currId !== null) {
+        chrome.tabs.duplicate(currId);
+      }
+    });
+  }
+});
 
 // chrome.browserAction.onClicked.addListener(function(tab) {
 //   // send a message to the active tab
