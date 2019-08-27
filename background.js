@@ -15,7 +15,7 @@ chrome.commands.onCommand.addListener(function(command) {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.toggleState) {
+  if (request.toggleOn) {
     chrome.alarms.create("breakAlarm", {delayInMinutes: 1, periodInMinutes: 1});
   } else {
     chrome.alarms.clear("breakAlarm");
@@ -38,7 +38,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 // });
 
 chrome.alarms.onAlarm.addListener(function(alarm) {
-  if (alarm === breakAlarm) {
-    chrome.tabs.create({active: true});
+  console.log(alarm);
+  if (alarm.name === "breakAlarm") {
+    chrome.tabs.create({active: true, url: "eyetab.html"});
   }
 });
