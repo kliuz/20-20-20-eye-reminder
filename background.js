@@ -1,18 +1,26 @@
 chrome.runtime.onInstalled.addListener(function() {
   alert("Hi, you updated the extension!");
-  // chrome.alarms.create("testAlarm", {delayInMinutes: 1, periodInMinutes: 1});
+  chrome.alarms.create("breakAlarm", {delayInMinutes: 1, periodInMinutes: 1});
 });
 
 chrome.commands.onCommand.addListener(function(command) {
   if (command === "duplicate-tab") {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       let currId = tabs[0].id;
-      if (currId !== null) {
+      if (currId) {
         chrome.tabs.duplicate(currId);
       }
     });
   }
 });
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.toggleState) {
+    chrome.alarms.create("breakAlarm", {delayInMinutes: 1, periodInMinutes: 1});
+  } else {
+    chrome.alarms.clear("breakAlarm");
+  }
+})
 
 // chrome.browserAction.onClicked.addListener(function(tab) {
 //   // send a message to the active tab
@@ -29,6 +37,8 @@ chrome.commands.onCommand.addListener(function(command) {
 //   }
 // });
 
-// chrome.alarms.onAlarm.addListener(function(alarm) {
-//   alert("Beep!");
-// });
+chrome.alarms.onAlarm.addListener(function(alarm) {
+  if (alarm === breakAlarm) {
+    chrome.tabs.create({active: true});
+  }
+});
