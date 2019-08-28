@@ -1,7 +1,31 @@
 chrome.runtime.onInstalled.addListener(function() {
   alert("Hi, you updated the extension!");
-  chrome.alarms.create("breakAlarm", {delayInMinutes: 1, periodInMinutes: 1});
+  chrome.storage.sync.remove("toggleState", function() {
+    const error = chrome.runtime.lastError;
+    if (error) {
+      console.log(error);
+    }
+  });
+  chrome.alarms.create("breakAlarm", {delayInMinutes: 0.1, periodInMinutes: 0.1});
 });
+
+function createDestroyAlarm() {
+  chrome.storage.sync.get({"toggleState": true}, state =>  {
+    console.log(state.toggleState);
+    if (state.toggleState) {
+      chrome.alarms.create("breakAlarm", {delayInMinutes: 0.1, periodInMinutes: 0.1});
+    } else {
+      chrome.alarms.clear("breakAlarm");
+    }
+    console.log("state: ", state.toggleState);
+    chrome.alarms.getAll(function(alarms) {
+      console.log(alarms);
+    });
+  });
+  
+}
+
+chrome.runtime.onStartup.addListener(createDestroyAlarm);
 
 chrome.commands.onCommand.addListener(function(command) {
   if (command === "duplicate-tab") {
@@ -15,27 +39,10 @@ chrome.commands.onCommand.addListener(function(command) {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.toggleOn) {
-    chrome.alarms.create("breakAlarm", {delayInMinutes: 1, periodInMinutes: 1});
-  } else {
-    chrome.alarms.clear("breakAlarm");
+  if (request.toggleChanged) {
+    createDestroyAlarm();
   }
-})
-
-// chrome.browserAction.onClicked.addListener(function(tab) {
-//   // send a message to the active tab
-//   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-//     var activeTab = tabs[0];
-//     chrome.tabs.sendMessage(activeTab.id, {"message": "clicked browser action"});
-//   })
-// });
-
-// chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-//   console.log(request.message);
-//   if (request.message === "open new tab") {
-//     chrome.tabs.create({"url": request.url});
-//   }
-// });
+});
 
 chrome.alarms.onAlarm.addListener(function(alarm) {
   console.log(alarm);
