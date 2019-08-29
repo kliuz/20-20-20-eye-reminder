@@ -16,6 +16,7 @@ const countdown = setInterval(function() {
     timer.parentNode.removeChild(timer);
     clearInterval(countdown);
     revealButton();
+    return;
   }
   document.getElementById("timer").innerHTML = seconds;
   seconds--;

@@ -7,6 +7,8 @@ chrome.runtime.onInstalled.addListener(function() {
     }
   });
   chrome.alarms.create("breakAlarm", {delayInMinutes: 0.1, periodInMinutes: 0.33});
+
+  chrome.storage.sync.set({"totalReminders": 0, "obeyedReminders": 0});
 });
 
 function createDestroyAlarm() {
@@ -44,13 +46,23 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
   if (request.rested) {
     // todo: do something and keep track
-    console.log(1);
+    chrome.storage.sync.get(["obeyedReminders"], function(reminder) {
+      chrome.storage.sync.set({"obeyedReminders": reminder.obeyedReminders+1});
+    });
   }
+  chrome.storage.sync.get(null, function(items) {
+    console.log(items);
+  });
 });
 
 chrome.alarms.onAlarm.addListener(function(alarm) {
-  console.log(alarm);
   if (alarm.name === "breakAlarm") {
     chrome.tabs.create({active: true, url: "eyetab.html"});
+    chrome.storage.sync.get(["totalReminders"], function(reminder) {
+      chrome.storage.sync.set({"totalReminders": reminder.totalReminders+1});
+    });
   }
+  chrome.storage.sync.get(null, function(items) {
+    console.log(items);
+  });
 });
