@@ -6,14 +6,14 @@ chrome.runtime.onInstalled.addListener(function() {
       console.log(error);
     }
   });
-  chrome.alarms.create("breakAlarm", {delayInMinutes: 0.1, periodInMinutes: 0.1});
+  chrome.alarms.create("breakAlarm", {delayInMinutes: 0.1, periodInMinutes: 0.33});
 });
 
 function createDestroyAlarm() {
   chrome.storage.sync.get({"toggleState": true}, state =>  {
     console.log(state.toggleState);
     if (state.toggleState) {
-      chrome.alarms.create("breakAlarm", {delayInMinutes: 0.1, periodInMinutes: 0.1});
+      chrome.alarms.create("breakAlarm", {delayInMinutes: 0.1, periodInMinutes: 0.33});
     } else {
       chrome.alarms.clear("breakAlarm");
     }
@@ -22,7 +22,6 @@ function createDestroyAlarm() {
       console.log(alarms);
     });
   });
-  
 }
 
 chrome.runtime.onStartup.addListener(createDestroyAlarm);
@@ -41,6 +40,11 @@ chrome.commands.onCommand.addListener(function(command) {
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.toggleChanged) {
     createDestroyAlarm();
+  }
+
+  if (request.rested) {
+    // todo: do something and keep track
+    console.log(1);
   }
 });
 

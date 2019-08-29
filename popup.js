@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
+  // todo: fix this flickering
   chrome.storage.sync.get({"toggleState": true}, state => {
     chrome.storage.sync.set({"toggleState": state.toggleState});
     if (!state.toggleState) {
