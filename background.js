@@ -6,13 +6,13 @@ chrome.runtime.onInstalled.addListener(function() {
       console.log(error);
     }
   });
-  chrome.alarms.create("breakAlarm", {delayInMinutes: 0.1, periodInMinutes: 0.33});
+  chrome.alarms.create("breakAlarm", {delayInMinutes: 0.1, periodInMinutes: 20});
 
   chrome.storage.sync.set({"totalReminders": 0, "obeyedReminders": 0});
 });
 
 function createDestroyAlarm() {
-  chrome.storage.sync.get({"toggleState": true}, state =>  {
+  chrome.storage.sync.get({"toggleState": true}, state => {
     console.log(state.toggleState);
     if (state.toggleState) {
       chrome.alarms.create("breakAlarm", {delayInMinutes: 0.1, periodInMinutes: 0.33});
