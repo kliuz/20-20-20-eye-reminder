@@ -4,15 +4,22 @@
 <head>
     <title>Break Time!</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="eyetab.css" rel="stylesheet">
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 </head>
 
 <body>
-    <h1>Let your eyes take a break! In 20 secconds a button will appear so you can record yourself looking away! If you didn't look away or if you close the tab before 20 seconds, you've failed.</h1>
-    <h2 id="timer"></h2>
-    <div id="btnLoc"></div>
-    <script src="eyetab.js"></script>
+    <div class="hero">
+        <div class="reminder">
+            <h1>Hey there! Consider giving your eyes a break for at least 20 seconds.</h1>
+        </div>
+        <div class="hero-inner">
+            <h2 id="timer"></h2>
+            <div id="btnLoc"></div>
+            <script src="eyetab.js"></script>
+        </div>
+    </div>
 </body>
 
 </html>
