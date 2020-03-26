@@ -1,6 +1,6 @@
 {
   "name": "20-20-20 Rule Reminder",
-  "version": "1.0",
+  "version": "1.0.1",
   "manifest_version": 2,
   "description": "Reminds you to look at something at least 20 feet away for 20 seconds every 20 minutes.",
   "background": {
