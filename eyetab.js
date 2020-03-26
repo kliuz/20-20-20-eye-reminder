@@ -4,14 +4,15 @@ function revealButton() {
   btn.innerHTML = "I've rested my eyes!";
   btn.addEventListener("click", function() {
     btn.parentNode.removeChild(btn);
-    chrome.runtime.sendMessage({"rested": true})
+    chrome.runtime.sendMessage({"rested": true});
+    window.close();
   });
   document.getElementById("btnLoc").appendChild(btn);
 
   let closePageTimer = 240;
   setInterval(function() {
     if (closePageTimer === 0) {
-      window.close()
+      window.close();
     }
     closePageTimer--;
   }, 1000)
