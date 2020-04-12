@@ -30,3 +30,19 @@ const countdown = setInterval(function() {
   document.getElementById("timer").innerHTML = showButtonTimer;
   showButtonTimer--;
 }, 1000);
+
+chrome.storage.sync.get(["obeyedReminders", "totalReminders"], function(items) {
+  const obeyedReminders = items.obeyedReminders;
+  const totalReminders = items.totalReminders;
+
+  new Chart(document.getElementById("doughnut-chart"), {
+    type: 'doughnut',
+    data: {
+      labels: ["Rested", "Ignored"],
+      datasets: [{
+        backgroundColor: ["#3e95cd", "#c45850"],
+        data: [obeyedReminders, totalReminders-obeyedReminders]
+      }]
+    },
+  });
+});

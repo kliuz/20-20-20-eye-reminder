@@ -7,17 +7,21 @@
     <link href="eyetab.css" rel="stylesheet">
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="content.js"></script>
+    <script src="eyetab.js"></script>
 </head>
 
 <body>
     <div class="hero">
+        <div id="stats">
+            <canvas id="doughnut-chart" width="200" height="200"></canvas>
+        </div>
         <div class="reminder">
             <h1>Hey there! Consider giving your eyes a break for at least 20 seconds.</h1>
         </div>
         <div class="hero-inner">
             <h2 id="timer"></h2>
             <div id="btnLoc"></div>
-            <script src="eyetab.js"></script>
         </div>
     </div>
 </body>

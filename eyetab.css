@@ -1,5 +1,6 @@
 .hero {
     color: #e8e4c9;
+    position: relative;
 
     /* Sizing */
     width: 100vw;
@@ -11,7 +12,7 @@
     justify-content: center;
     align-items: center;
 
-    background-image: url("images/background.jpg");
+    background-image: url("images/background2.jpg");
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -20,4 +21,6 @@
 
 .reminder {
     margin: 10px;
+    position: absolute;
+    bottom: 50px;
 }
